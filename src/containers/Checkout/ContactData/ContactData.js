@@ -52,7 +52,7 @@ class ContactData extends Component {
             elementType: "select",
           elementConfig: {
             options: [
-              {value: 'fastes', displayValue: 'Fastes'},
+              {value: 'fastest', displayValue: 'Fastest'},
               {value: 'cheapest', displayValue: 'Cheapest'}
           ],
         },
@@ -68,10 +68,15 @@ class ContactData extends Component {
     //console.log(this.props.ingredients);
     alert("You Continue!");
     this.setState({ loading: true });
+    const formData={};
+    for(let formElementInfetifier in this.state.orderForm){
+      formData[formElementInfetifier]=this.state.orderForm[formElementInfetifier].value;
+    }
     const order = {
-      ingredients: this.props.ingredients,}
+      ingredients: this.props.ingredients,
       //price: this.props.totalPrice,
-      
+      orderData: formData,
+    }
     axios
       .post("/orders.json", order)
       .then((response) => {
@@ -85,6 +90,7 @@ class ContactData extends Component {
   };
 
     inputChangeHandler = (event, inputIndetifier) =>{
+      //console.log(event.target.value);
       const updatedOrderForm = {
         ...this.state.orderForm
       };
@@ -105,7 +111,7 @@ class ContactData extends Component {
       })
     }
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formElementsArray.map(formElement => (
           <Input 
               key={formElement.id}
