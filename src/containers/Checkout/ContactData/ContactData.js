@@ -7,34 +7,71 @@ import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    addres: {
-      street: "",
-      postalCode: "",
-    },
-  };
+    orderForm:{
+        name: {
+          elementType: "input",
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Your Name',
+          },
+          value: '',
+        },
+        street: {
+          elementType: "input",
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Street',
+        },
+        value: '',
+      },
+      zipCode:{
+        elementType: "input",
+          elementConfig: {
+            type: 'text',
+            placeholder: 'ZIP Code',
+        },
+        value: '',
+      },
+          country: {
+            elementType: "input",
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Your Country',
+        },
+        value: '',
+          },
+          email: {
+            elementType: "input",
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Your E-Mail',
+        },
+        value: '',
+          },
+          deliveryMethod: {
+            elementType: "select",
+          elementConfig: {
+            options: [
+              {value: 'fastes', displayValue: 'Fastes'},
+              {value: 'cheapest', displayValue: 'Cheapest'}
+          ],
+        },
+        value: '',
+          },
+        },
+    loading: false,
+}
 
-  orderHandler = (event) => {
+    orderHandler = (event) => {
     event.preventDefault();
     //per me send request edhe me reload page ta mundson qe me ti shfaq qato ingredients qka i ka tu e perdor event.preventD
     //console.log(this.props.ingredients);
     alert("You Continue!");
     this.setState({ loading: true });
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ingredients,}
       //price: this.props.totalPrice,
-      costumer: {
-        name: "Arbesë Musliu",
-        address: {
-          country: "Albania",
-          street: "Teststreet 1",
-          zipCode: "2343",
-        },
-        email: "arbesa@gmail.com",
-      },
-      deliveryMethod: "fastest",
-    };
+      
     axios
       .post("/orders.json", order)
       .then((response) => {
@@ -48,32 +85,22 @@ class ContactData extends Component {
   };
 
   render() {
+    const formElementsArray =[];
+    for(let key in this.state.orderForm){
+      formElementsArray.push({
+        id: key,
+        config: this.state.orderForm[key],
+      })
+    }
     let form = (
       <form>
-        <Input
-        inputtype="input"
-          type="text"
-          name="name"
-          placeholder="Enter your Name"
-        />
-        <Input
-          inputtype="input"
-          type="email"
-          name="email"
-          placeholder="Enter your Mail"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="street"
-          placeholder="Enter Street"
-        />
-        <Input
-         inputtype="input"
-          type="text"
-          name="postal"
-          placeholder="Enter Postal Code"
-        />
+        {formElementsArray.map(formElement => (
+          <Input 
+              key={formElement.id}
+              elementType={formElement.config.elementType}
+              elementConfig={formElement.config.elementConfig}
+              value={formElement.config.value}/>
+        ))}
         <Button buttonType="Success" clicked={this.orderHandler}>
           ORDER
         </Button>
