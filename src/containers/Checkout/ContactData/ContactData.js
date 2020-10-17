@@ -84,14 +84,13 @@ class ContactData extends Component {
           ],
         },
         value: '',
-        validation :{
-          required: true,
-        },
-        valid: false,
+        validation :{},
+        valid: true,
         touched: false,
           },
         },
     loading: false,
+    formIsValid: false,
 }
 
     orderHandler = (event) => {
@@ -101,8 +100,8 @@ class ContactData extends Component {
     //alert("You Continue!");
     this.setState({ loading: true });
     const formData={};
-    for(let inputIndetifier in this.state.orderForm){
-      formData[inputIndetifier]=this.state.orderForm[inputIndetifier].value;
+    for(let inputIdentifier  in this.state.orderForm){
+      formData[inputIdentifier]=this.state.orderForm[inputIdentifier].value;
     }
     const order = {
       ingredients: this.props.ingredients,
@@ -124,6 +123,9 @@ class ContactData extends Component {
 
   checkValidity(value, rules){
      let isValid = true;
+     if(!rules){
+       return true;
+     }
      if(rules.required){
        isValid = value.trim() !== '' && isValid;
      }
@@ -137,20 +139,25 @@ class ContactData extends Component {
      return isValid;
   }
 
-    inputChangeHandler = (event, inputIndetifier) =>{
+    inputChangeHandler = (event, inputIdentifier ) =>{
       //console.log(event.target.value);
       const updatedOrderForm = {
         ...this.state.orderForm
       };
       const updatedFormElement = {
-        ...updatedOrderForm[inputIndetifier]
+        ...updatedOrderForm[inputIdentifier]
       };
       updatedFormElement.value = event.target.value;
       updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
       updatedFormElement.touched =true;
-      updatedOrderForm[inputIndetifier]=updatedFormElement;
-      console.log(updatedFormElement);
-      this.setState({orderForm: updatedOrderForm})
+      updatedOrderForm[inputIdentifier]=updatedFormElement;
+      
+       let formIsValid = false;
+       for(let inputIdentifier in updatedOrderForm){
+           formIsValid = updatedOrderForm[inputIdentifier].valid & formIsValid;
+       }
+        console.log(formIsValid);
+      this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid})
     }
 
   render() {
@@ -178,7 +185,7 @@ class ContactData extends Component {
           }
           )
           }
-        <Button buttonType="Success" clicked={this.orderHandler}>
+        <Button buttonType="Success" disabled={!this.state.formIsValid}>
           ORDER
         </Button>
       </form>

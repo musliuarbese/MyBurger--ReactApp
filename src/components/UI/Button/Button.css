@@ -14,14 +14,19 @@
     margin-left: 0;
     padding-left: 0;
   }
+  .Button:disabled{
+    color: #ccc;
+    cursor: not-allowed; 
+    /* //nuk mundesh me kliku te butoni that's why o not allowed */
+  }
   
   .Success {
     color: #5c9210;
-    font-size: 24px;
+    font-size: 16px;
   }
   
   .Danger {
     color: red;
-    font-size: 24px;
+    font-size: 16px;
   }
   
