@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Modal from "../../components/UI/Modal/Modal";
 import Auxx from "../Auxx";
 //import axios from "../../axios-orders";
