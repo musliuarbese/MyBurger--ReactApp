@@ -92,11 +92,11 @@ class ContactData extends Component {
     event.preventDefault();
     //per me send request edhe me reload page ta mundson qe me ti shfaq qato ingredients qka i ka tu e perdor event.preventD
     //console.log(this.props.ingredients);
-    alert("You Continue!");
+    //alert("You Continue!");
     this.setState({ loading: true });
     const formData={};
-    for(let formElementInfetifier in this.state.orderForm){
-      formData[formElementInfetifier]=this.state.orderForm[formElementInfetifier].value;
+    for(let inputIndetifier in this.state.orderForm){
+      formData[inputIndetifier]=this.state.orderForm[inputIndetifier].value;
     }
     const order = {
       ingredients: this.props.ingredients,
@@ -147,7 +147,7 @@ class ContactData extends Component {
     }
 
   render() {
-    const formElementsArray =[];
+    let formElementsArray =[];
     for(let key in this.state.orderForm){
       formElementsArray.push({
         id: key,
@@ -156,14 +156,20 @@ class ContactData extends Component {
     }
     let form = (
       <form onSubmit={this.orderHandler}>
-        {formElementsArray.map(formElement => (
+        {formElementsArray.map(formElement => {
+          return(
           <Input 
               key={formElement.id}
               elementType={formElement.config.elementType}
               elementConfig={formElement.config.elementConfig}
               value={formElement.config.value}
+              invalid={!formElement.config.valid}
+              shouldValidate={formElement.config.validation}
               changed={(event) => this.inputChangeHandler(event, formElement.id)}/>
-        ))}
+          )
+          }
+          )
+          }
         <Button buttonType="Success" clicked={this.orderHandler}>
           ORDER
         </Button>
