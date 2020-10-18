@@ -6,14 +6,14 @@ const intialState = {
    loading: false,
 }
 
-const reducer = (state = intialState, actions) =>{
+const reducer = (state = intialState, action) =>{
     switch(action.type){
         case actionTypes.PURCHASE_BURGER_STAR:
             return{
                 ...state,
                 loading: true
             }
-        case actionTypes.PURCHSE_BURGER_SUCCESS:
+        case actionTypes.PURCHASE_BURGER_SUCCESS:
             const newOrder = {
                 ...action.orderData,
                 id: action.orderId
