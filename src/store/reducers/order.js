@@ -4,10 +4,16 @@ import * as actionTypes from '../actions/actionTypes';
 const intialState = {
    orders: [],
    loading: false,
+   purchased: false
 }
 
 const reducer = (state = intialState, action) =>{
     switch(action.type){
+        case actionTypes.PURCHASE_INIT:
+            return{
+                ...state,
+                purchased: false
+            }
         case actionTypes.PURCHASE_BURGER_STAR:
             return{
                 ...state,
@@ -21,6 +27,7 @@ const reducer = (state = intialState, action) =>{
             return{
                 ...state,
                 loading: false,
+                purchased: true,
                 order: state.orders.concat(newOrder)
                 //order osht old orders ku me concat e kthejm nje new array and therefore we add this immutably 
             };
