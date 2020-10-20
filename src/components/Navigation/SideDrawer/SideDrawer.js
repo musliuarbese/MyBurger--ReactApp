@@ -19,7 +19,7 @@ const sideDrawer = (props) => {
         {/* styling for logo is set differently in the 'sideDrawer'*/}
         <Logo height="11%" margin="30px" />
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={props.isAuth}/>
         </nav>
       </div>
     </Auxx>
