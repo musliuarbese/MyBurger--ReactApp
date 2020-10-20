@@ -9,13 +9,15 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducers from './store/reducers/order';
+import authReducers from './store/reducers/auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //compose allows us to compose our own set of enhancers and middleware is just one kind of enhancer
 
 const rootReducers = combineReducers({
     burgerBuilder: burgerBuilderReducer,
-    order: orderReducers
+    order: orderReducers,
+    auth: authReducers
 })
 
 const store = createStore(rootReducers, composeEnhancers(

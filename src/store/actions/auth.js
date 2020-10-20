@@ -1,16 +1,18 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import reducer from '../reducers/auth';
+
 export const authStart = () =>{
     return{
         type: actionTypes.AUTH_START
     }
 }
 
-
-export const authSuccess = (authData) =>{
+export const authSuccess = (token, userId) =>{
     return{
         type: actionTypes.AUTH_SUCCESS,
-        authData: authData
+        idtoken: token,
+        userId: userId
     }
 }
 
@@ -35,7 +37,7 @@ export const auth = (email, password, isSignup) =>{
          }
         axios.post(url, authData)
          .then(response => {
-             console.log(authSuccess(response.data))
+             console.log(authSuccess(response.data.idtoken, response.data.localId))
          })
          .catch(err =>{
              console.log(err);
