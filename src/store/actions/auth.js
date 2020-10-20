@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
-import reducer from '../reducers/auth';
+//import reducer from '../reducers/auth';
 
 export const authStart = () =>{
     return{
@@ -40,8 +40,7 @@ export const auth = (email, password, isSignup) =>{
              console.log(authSuccess(response.data.idtoken, response.data.localId))
          })
          .catch(err =>{
-             console.log(err);
-             dispatch(authFail(err));
+             dispatch(authFail(err.response.data.error));
          })
     }
 }
