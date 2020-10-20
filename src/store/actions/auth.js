@@ -21,15 +21,19 @@ export const authFail = (error) =>{
     }
 }
 
-export const auth = (email, password) =>{
+export const auth = (email, password, isSignup) =>{
     return dispatch =>{
         dispatch(authStart());
         const authData = {
             email: email,
             password: password,
             returnSecureToken: true
-        }
-        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AAAAggTJxwY:APA91bHRjTQiC-9Oj6rDYEDgc0wvOLXpNN0TLGlqjyVQ_HiC2AUUII7ZXrYOcJwgVn_kWpGA4dKlK-fF0NWDvf7SHTinm3l5903ldo5K2dyXGTuhYgU3l_CXS9yqYe2b3uLikiM0cGij')
+        };
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AAAAggTJxwY:APA91bHRjTQiC-9Oj6rDYEDgc0wvOLXpNN0TLGlqjyVQ_HiC2AUUII7ZXrYOcJwgVn_kWpGA4dKlK-fF0NWDvf7SHTinm3l5903ldo5K2dyXGTuhYgU3l_CXS9yqYe2b3uLikiM0cGij';
+         if(!isSignup ){
+             url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AAAAggTJxwY:APA91bHRjTQiC-9Oj6rDYEDgc0wvOLXpNN0TLGlqjyVQ_HiC2AUUII7ZXrYOcJwgVn_kWpGA4dKlK-fF0NWDvf7SHTinm3l5903ldo5K2dyXGTuhYgU3l_CXS9yqYe2b3uLikiM0cGij';
+         }
+        axios.post(url, authData)
          .then(response => {
              console.log(authSuccess(response.data))
          })
