@@ -1,28 +1,31 @@
 import React from "react";
-import classes from "./SideDrawer.css";
+
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Backdrop from "../../UI/Backdrop/Backdrop";
-import Auxx from "../../../hoc/Auxx";
+import Auxx from "../../../hoc/Auxx/Auxx";
+import styles from "./SideDrawer.module.css";
 
-const sideDrawer = (props) => {
-  let attachedClasses = [classes.SideDrawer, classes.Close];
+const sideDrawer = props => {
+  let attachedClasses = [styles.SideDrawer, styles.Close];
+
   if (props.open) {
-    attachedClasses = [classes.SideDrawer, classes.Open];
+    attachedClasses = [styles.SideDrawer, styles.Open];
   }
+
   return (
     <Auxx>
-      {/* when 'Backdrop' is clicked 'close' is passed to handler to hide backdrop and close 'sideDrawer' */}
       <Backdrop show={props.open} clicked={props.closed} />
-      {/* the 'attachedClasses' array is joined and is added as styling to the dive that shows the components in 'sideDrawer'*/}
       <div className={attachedClasses.join(" ")} onClick={props.closed}>
-        {/* styling for logo is set differently in the 'sideDrawer'*/}
-        <Logo height="11%" margin="30px" />
+        <div className={styles.Logo}>
+          <Logo />
+        </div>
         <nav>
-          <NavigationItems isAuthenticated={props.isAuth}/>
+          <NavigationItems isAuthenticated={props.isAuth} />
         </nav>
       </div>
     </Auxx>
   );
 };
+
 export default sideDrawer;
